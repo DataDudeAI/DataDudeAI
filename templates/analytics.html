@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analytics Dashboard - DataDude</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-chart-line"></i>
+            <span>DataDude Analytics</span>
+        </div>
+        <div class="nav-links">
+            <a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a>
+            <a href="/campaign/create" class="nav-link"><i class="fas fa-plus"></i> Create Link</a>
+        </div>
+    </nav>
+
+    <div class="analytics-container">
+        <!-- Summary Stats -->
+        <div class="stats-grid">
+            <div class="stat-box total-visits">
+                <i class="fas fa-users"></i>
+                <div class="stat-content">
+                    <h3>Total Visits</h3>
+                    <div class="stat-number" id="total-visits">0</div>
+                </div>
+            </div>
+            
+            <div class="stat-box unique-visitors">
+                <i class="fas fa-user-check"></i>
+                <div class="stat-content">
+                    <h3>Unique Visitors</h3>
+                    <div class="stat-number" id="unique-visitors">0</div>
+                </div>
+            </div>
+            
+            <div class="stat-box bounce-rate">
+                <i class="fas fa-bounce"></i>
+                <div class="stat-content">
+                    <h3>Bounce Rate</h3>
+                    <div class="stat-number" id="bounce-rate">0%</div>
+                </div>
+            </div>
+            
+            <div class="stat-box avg-time">
+                <i class="fas fa-clock"></i>
+                <div class="stat-content">
+                    <h3>Avg. Time</h3>
+                    <div class="stat-number" id="avg-time">0s</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-grid">
+            <div class="chart-box">
+                <h3><i class="fas fa-map-marker-alt"></i> Visitors by Location</h3>
+                <div id="location-chart" class="chart"></div>
+            </div>
+            
+            <div class="chart-box">
+                <h3><i class="fas fa-mobile-alt"></i> Device Distribution</h3>
+                <div id="device-chart" class="chart"></div>
+            </div>
+            
+            <div class="chart-box">
+                <h3><i class="fas fa-globe"></i> Browser Usage</h3>
+                <div id="browser-chart" class="chart"></div>
+            </div>
+            
+            <div class="chart-box">
+                <h3><i class="fas fa-network-wired"></i> ISP Distribution</h3>
+                <div id="isp-chart" class="chart"></div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="recent-activity-section">
+            <h3><i class="fas fa-history"></i> Recent Activity</h3>
+            <div class="activity-timeline" id="recent-visits">
+                <!-- Activity items will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/analytics.js') }}"></script>
+</body>
+</html> 
