@@ -1,0 +1,222 @@
+# DataDude Developer Documentation
+
+## Overview
+DataDude is a web-based analytics and campaign tracking platform that provides real-time tracking, campaign management, and deep linking capabilities. The platform is built using Flask (Python) for the backend and vanilla JavaScript for the frontend.
+
+## Project Structure
+datadude/
+├── app.py # Main Flask application
+├── database.py # Database operations and schema
+├── geo_service.py # User agent and device detection
+├── check_db.py # Database testing utility
+├── services/
+│ └── tracking_service.py # Visit tracking logic
+├── models/
+│ ├── campaign.py # Campaign data model
+│ └── deeplink.py # Deep link data model
+├── static/
+│ ├── css/
+│ │ └── style.css # Global styles
+│ └── js/
+│ ├── analytics.js # Analytics page logic
+│ ├── campaign.js # Campaign management
+│ ├── dashboard.js # Main dashboard
+│ ├── deeplink.js # Deep linking
+│ └── track.js # Tracking utilities
+├── templates/
+│ ├── analytics.html # Analytics dashboard
+│ ├── campaigns.html # Campaign management
+│ ├── index.html # Main dashboard
+│ └── deeplink.html # Deep link creation
+└── visits.db # SQLite database
+
+## Core Components
+
+### 1. Backend (Python/Flask)
+
+#### Database (database.py)
+- SQLite database with tables for campaigns and visits
+- Handles all data operations and analytics queries
+- Schema includes campaign tracking and visit data storage
+
+#### Tracking Service (tracking_service.py)
+- Manages visit tracking and data collection
+- Processes user agent information
+- Handles campaign attribution
+
+#### Geo Service (geo_service.py)
+- Handles device and browser detection
+- Processes user agent strings
+- Extracts device and browser information
+
+### 2. Frontend (JavaScript)
+
+#### Dashboard (dashboard.js)
+- Real-time statistics display
+- Mini charts for quick insights
+- Recent activity feed
+
+#### Analytics (analytics.js)
+- Detailed analytics visualizations
+- Data filtering and processing
+- Timeline views
+
+#### Campaign Management (campaign.js)
+- Campaign CRUD operations
+- URL shortening
+- Campaign statistics
+
+## Key Features
+
+### 1. Campaign Tracking
+- Short URL generation
+- Campaign attribution
+- Real-time statistics
+
+### 2. Analytics
+- Visit tracking
+- Device detection
+- Browser analytics
+- Geographic data
+- Time-based analysis
+
+### 3. User Interface
+- Real-time updates
+- Interactive charts
+- Responsive design
+- Error handling
+
+## Database Schema
+
+### Campaigns Table
+
+
+sql:datadude/Project Details.txt
+CREATE TABLE campaigns (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+name TEXT NOT NULL,
+short_code TEXT UNIQUE NOT NULL,
+original_url TEXT NOT NULL,
+type TEXT NOT NULL,
+status TEXT DEFAULT 'active',
+utm_source TEXT,
+utm_medium TEXT,
+utm_campaign TEXT,
+created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+)
+
+
+### Visits Table
+
+sql
+CREATE TABLE visits (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+campaign_code TEXT,
+session_id TEXT,
+ip_address TEXT,
+user_agent TEXT,
+referrer TEXT,
+visit_data TEXT,
+timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+FOREIGN KEY(campaign_code) REFERENCES campaigns(short_code)
+)
+
+## API Endpoints
+
+### Campaign Endpoints
+- `GET /api/campaigns` - List all campaigns
+- `POST /api/campaigns` - Create new campaign
+- `GET /api/campaigns/<short_code>` - Get campaign details
+- `PUT /api/campaigns/<short_code>` - Update campaign
+- `DELETE /api/campaigns/<short_code>` - Delete campaign
+
+### Analytics Endpoints
+- `GET /api/stats` - Get analytics overview
+- `GET /api/visits` - Get visit details
+- `POST /track` - Track new visit
+
+## Development Setup
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Initialize database:
+   ```bash
+   python check_db.py
+   ```
+4. Run development server:
+   ```bash
+   python app.py
+   ```
+
+## Best Practices
+
+1. Code Organization
+   - Keep related functionality together
+   - Use services for business logic
+   - Maintain separation of concerns
+
+2. Error Handling
+   - Always include try-catch blocks
+   - Log errors appropriately
+   - Return meaningful error messages
+
+3. Database Operations
+   - Use parameterized queries
+   - Close connections properly
+   - Handle transaction rollbacks
+
+4. Frontend Development
+   - Use consistent naming conventions
+   - Implement proper error handling
+   - Maintain responsive design
+
+## Testing
+
+1. Database Testing
+   ```bash
+   python check_db.py
+   ```
+
+2. API Testing
+   - Use Postman or similar tools
+   - Test all CRUD operations
+   - Verify error handling
+
+## Deployment
+
+1. Update configuration
+   - Set DEBUG = False
+   - Update secret keys
+   - Configure logging
+
+2. Database setup
+   - Initialize database
+   - Set up backup strategy
+
+3. Server configuration
+   - Set up reverse proxy
+   - Configure SSL
+   - Set up monitoring
+
+## Maintenance
+
+1. Regular Tasks
+   - Database backups
+   - Log rotation
+   - Performance monitoring
+
+2. Updates
+   - Keep dependencies updated
+   - Monitor security advisories
+   - Update documentation
+
+## Support
+
+For technical support or questions:
+- Check the issue tracker
+- Review the documentation
+- Contact the development team
+
